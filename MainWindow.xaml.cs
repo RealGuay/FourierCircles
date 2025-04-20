@@ -19,10 +19,14 @@ public partial class MainWindow : Window
 {
     private DispatcherTimer _circleTimer = new DispatcherTimer(DispatcherPriority.Render);
 
+    int subArmQty = 3;
+
+
     public MainWindow()
     {
         InitializeComponent();
         InitializeTimer();
+        MainCircleArm.MainCanvas = CircleCanvas;     
     }
 
     private void InitializeTimer()
@@ -35,10 +39,20 @@ public partial class MainWindow : Window
     private void OnTimer(object? sender, EventArgs e)
     {
         int nextAngle = MainCircleArm.RotateAngle - 1;
+
         if (nextAngle <= -360)
         {
             nextAngle = 0;
+            MainCircleArm.RotateAngle = nextAngle;
+            if (subArmQty-- > 0)
+            {
+                CircleArm newArm = new CircleArm() { ArmLength = 50, MainCanvas = MainCircleArm.MainCanvas };
+                MainCircleArm.AddCircleArm(newArm);
+            }
         }
-        MainCircleArm.RotateAngle = nextAngle;
+        else
+        {
+            MainCircleArm.RotateAngle = nextAngle;
+        }
     }
 }

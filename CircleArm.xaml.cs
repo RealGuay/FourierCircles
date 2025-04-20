@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Converters;
 
 namespace FourierCircles
 {
@@ -26,7 +16,50 @@ namespace FourierCircles
             DataContext = this;
         }
 
+        public Canvas? MainCanvas { get; set; }
         public int ArmLength { get; set; }
+
+        public CircleArm? NextCircleArm { get; set; }
+
+        public double ArmCenterX
+        {
+            get { return (double)GetValue(ArmCenterXProperty); }
+            set { SetValue(ArmCenterXProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ArmCenterX.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ArmCenterXProperty =
+            DependencyProperty.Register("ArmCenterX", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
+
+        public double ArmCenterY
+        {
+            get { return (double)GetValue(ArmCenterYProperty); }
+            set { SetValue(ArmCenterYProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ArmCenterY.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ArmCenterYProperty =
+            DependencyProperty.Register("ArmCenterY", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
+
+        public double ArmEndX
+        {
+            get { return (double)GetValue(ArmEndXProperty); }
+            set { SetValue(ArmEndXProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ArmEndX.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ArmEndXProperty =
+            DependencyProperty.Register("ArmEndX", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
+
+        public double ArmEndY
+        {
+            get { return (double)GetValue(ArmEndYProperty); }
+            set { SetValue(ArmEndYProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ArmEndY.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ArmEndYProperty =
+            DependencyProperty.Register("ArmEndY", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
 
         public int RotateAngle
         {
@@ -34,19 +67,59 @@ namespace FourierCircles
             set { SetRotateAngle(value); }
         }
 
-        private void SetRotateAngle(int value)
-        {
-            SetValue(RotateAngleProperty, value);
-            double x2 = SegmentLine.X2;
-            double y2 = SegmentLine.Y2;
-
-            Point point = SegmentLine.TransformToAncestor(CircleCanvas).Transform(new Point(SegmentLine.X2, SegmentLine.Y2));
-            Canvas.SetLeft(MyRect, point.X);
-            Canvas.SetTop(MyRect, point.Y);
-        }
-
         // Using a DependencyProperty as the backing store for RotateAngle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RotateAngleProperty =
             DependencyProperty.Register("RotateAngle", typeof(int), typeof(CircleArm), new PropertyMetadata(0));
+
+        private void SetRotateAngle(int value)
+        {
+            SetValue(RotateAngleProperty, value);
+
+            if (NextCircleArm != null)
+            {
+                MoveNextArm();
+                NextCircleArm.RotateAngle = value;
+            }
+        }
+
+        private void MoveNextArm()
+        {
+            if (NextCircleArm == null) return;
+
+            try
+            {
+                Point point = SegmentLine.TransformToAncestor(MainCanvas).Transform(new Point(SegmentLine.X2, SegmentLine.Y2));
+
+                double deltaX = point.X - NextCircleArm.ArmCenterX;
+                double deltaY = point.Y - NextCircleArm.ArmCenterY;
+
+                NextCircleArm.ArmCenterX = point.X;
+                NextCircleArm.ArmCenterY = point.Y;
+                NextCircleArm.ArmEndX += deltaX;
+                NextCircleArm.ArmEndY += deltaY;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+            }
+        }
+
+        internal void AddCircleArm(CircleArm newArm)
+        {
+            if (newArm == null) return;
+
+            if (NextCircleArm == null)
+            {
+                NextCircleArm = newArm;
+                MainCanvas?.Children.Add(NextCircleArm);
+                MoveNextArm();
+                NextCircleArm.ArmEndX = NextCircleArm.ArmCenterX + NextCircleArm.ArmLength;
+                NextCircleArm.ArmEndY = NextCircleArm.ArmCenterY;
+            }
+            else
+            {
+                NextCircleArm.AddCircleArm(newArm);
+            }
+        }
     }
 }

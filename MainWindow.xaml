@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="600">
     <Grid >
-        <local:CircleArm x:Name="MainCircleArm" RotateAngle="0" ArmLength="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Canvas x:Name="CircleCanvas" Height="400" Width="400"  Background="Beige">
+            <local:CircleArm x:Name="MainCircleArm" ArmCenterX="100" ArmCenterY="100" ArmEndX="150" ArmEndY="100" RotateAngle="0" ArmLength="100"/>
+        </Canvas>
     </Grid>
 </Window>

@@ -6,14 +6,9 @@
              xmlns:local="clr-namespace:FourierCircles"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="900">
-    <Canvas x:Name="CircleCanvas" Height="400" Width="400"  Background="Beige">
-        <Ellipse Canvas.Top="0" Canvas.Left="0" Height="200" Width="200" StrokeThickness="2" Stroke="Cyan"/>
-        <Line Canvas.Top="100" Canvas.Left="100" x:Name="SegmentLine"  X1="0" Y1="0" X2="100" Y2="00" Stroke="Red" StrokeThickness="2" Visibility="Visible">
+        <Line x:Name="SegmentLine"   X1="{Binding ArmCenterX}" Y1="{Binding ArmCenterY}" X2="{Binding ArmEndX}" Y2="{Binding ArmEndY}" Stroke="Red" StrokeThickness="2" Visibility="Visible">
             <Line.RenderTransform>
-                <RotateTransform Angle="{Binding RotateAngle}" CenterX="0" CenterY="0"/>
+            <RotateTransform Angle="{Binding RotateAngle}" CenterX="{ Binding X1, ElementName=SegmentLine}" CenterY="{ Binding Y1, ElementName=SegmentLine}" />
             </Line.RenderTransform>
         </Line>
-        <Ellipse Canvas.Left="98" Canvas.Top="98"  Height="4" Width="4" StrokeThickness="3" Stroke="Black"/>
-        <Rectangle x:Name="MyRect" Canvas.Top="100" Canvas.Left="100"  Width="10" Height="5" Fill="Orange"/>
-    </Canvas>
 </UserControl>
