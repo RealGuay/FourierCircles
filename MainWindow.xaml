@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FourierCircles"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600">
+        Title="MainWindow" Height="800" Width="1600">
     <Grid >
-        <Canvas x:Name="CircleCanvas" Height="400" Width="400"  Background="Beige">
-            <local:CircleArm x:Name="MainCircleArm" ArmCenterX="100" ArmCenterY="100" ArmEndX="150" ArmEndY="100" RotateAngle="0" ArmLength="100"/>
+        <Canvas x:Name="CircleCanvas" Height="800" Width="1400"  Background="Beige">
+            <Line X1="580" Y1="400" X2="620" Y2="400" Stroke="Gray" StrokeThickness="1" StrokeDashArray="2"/>
+            <Line X1="600" Y1="380" X2="600" Y2="420" Stroke="Gray" StrokeThickness="1" StrokeDashArray="2"/>
+            <local:CircleArm x:Name="MainCircleArm" ArmCenterX="600" ArmCenterY="400" ArmEndX="700" ArmEndY="400" RotateAngle="0" RotationSpeed="10"/>
         </Canvas>
     </Grid>
 </Window>

@@ -6,9 +6,12 @@
              xmlns:local="clr-namespace:FourierCircles"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="900">
-        <Line x:Name="SegmentLine"   X1="{Binding ArmCenterX}" Y1="{Binding ArmCenterY}" X2="{Binding ArmEndX}" Y2="{Binding ArmEndY}" Stroke="Red" StrokeThickness="2" Visibility="Visible">
+    <Canvas>
+        <Line x:Name="SegmentLine"  X1="{Binding ArmCenterX}" Y1="{Binding ArmCenterY}" X2="{Binding ArmEndX}" Y2="{Binding ArmEndY}" Stroke="Red" StrokeThickness="2">
             <Line.RenderTransform>
             <RotateTransform Angle="{Binding RotateAngle}" CenterX="{ Binding X1, ElementName=SegmentLine}" CenterY="{ Binding Y1, ElementName=SegmentLine}" />
             </Line.RenderTransform>
         </Line>
+        <Ellipse Margin="-2" Height="4" Width="4" StrokeThickness="1" Stroke="Black" Canvas.Left="{ Binding X1, ElementName=SegmentLine}" Canvas.Top="{ Binding Y1, ElementName=SegmentLine}"></Ellipse>
+    </Canvas>
 </UserControl>

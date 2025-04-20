@@ -10,14 +10,9 @@ namespace FourierCircles
     /// </summary>
     public partial class CircleArm : UserControl
     {
-        public CircleArm()
-        {
-            InitializeComponent();
-            DataContext = this;
-        }
-
         public Canvas? MainCanvas { get; set; }
         public int ArmLength { get; set; }
+        public double RotationSpeed {  get; set; }  
 
         public CircleArm? NextCircleArm { get; set; }
 
@@ -61,24 +56,36 @@ namespace FourierCircles
         public static readonly DependencyProperty ArmEndYProperty =
             DependencyProperty.Register("ArmEndY", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
 
-        public int RotateAngle
+        public double RotateAngle
         {
-            get { return (int)GetValue(RotateAngleProperty); }
-            set { SetRotateAngle(value); }
+            get { return (double)GetValue(RotateAngleProperty); }
+            set { SetValue(RotateAngleProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for RotateAngle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RotateAngleProperty =
-            DependencyProperty.Register("RotateAngle", typeof(int), typeof(CircleArm), new PropertyMetadata(0));
+            DependencyProperty.Register("RotateAngle", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
 
-        private void SetRotateAngle(int value)
+        public CircleArm()
         {
-            SetValue(RotateAngleProperty, value);
+            InitializeComponent();
+            DataContext = this;
+            Loaded += CircleArm_Loaded;
+        }
+
+        private void CircleArm_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        public void RotateArm(TimeSpan deltaT)
+        {
+            RotateAngle = deltaT.TotalSeconds * RotationSpeed;
 
             if (NextCircleArm != null)
             {
                 MoveNextArm();
-                NextCircleArm.RotateAngle = value;
+                NextCircleArm.RotateArm(deltaT);
             }
         }
 
