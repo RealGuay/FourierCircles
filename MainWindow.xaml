@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1600">
     <Grid >
-        <Canvas x:Name="CircleCanvas" Height="800" Width="1400"  Background="Beige">
-            <Line X1="580" Y1="400" X2="620" Y2="400" Stroke="Gray" StrokeThickness="1" StrokeDashArray="2"/>
-            <Line X1="600" Y1="380" X2="600" Y2="420" Stroke="Gray" StrokeThickness="1" StrokeDashArray="2"/>
-            <local:CircleArm x:Name="MainCircleArm" ArmCenterX="600" ArmCenterY="400" ArmEndX="700" ArmEndY="400" RotateAngle="0" RotationSpeed="10"/>
-        </Canvas>
+        <local:CircleCanvas x:Name="RootCircleCanvas"  Height="800" Width="1400"  RootCircleCenterX="500" RootCircleCenterY="400"></local:CircleCanvas>
     </Grid>
 </Window>

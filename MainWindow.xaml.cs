@@ -19,14 +19,13 @@ public partial class MainWindow : Window
 {
     private DispatcherTimer _circleTimer = new DispatcherTimer(DispatcherPriority.Render);
 
-    private int subArmQty = 9;
+    private int subArmQty = 5;
     private DateTime _startTime;
 
     public MainWindow()
     {
         InitializeComponent();
         InitializeTimer();
-        MainCircleArm.MainCanvas = CircleCanvas;
     }
 
     private void InitializeTimer()
@@ -41,7 +40,7 @@ public partial class MainWindow : Window
     {
         TimeSpan timeSpan = DateTime.Now - _startTime;
 
-        MainCircleArm.RotateArm(timeSpan);
+        RootCircleCanvas.RotateArm(timeSpan);
 
         int t1 = (int)timeSpan.TotalMilliseconds;
         int t2 = t1 % 123;
@@ -55,8 +54,8 @@ public partial class MainWindow : Window
     {
         if (subArmQty > 0)
         {
-            CircleArm newArm = new CircleArm() { ArmLength = 120 * subArmQty / 10, MainCanvas = MainCircleArm.MainCanvas, RotationSpeed = 100 / subArmQty };
-            MainCircleArm.AddCircleArm(newArm);
+            CircleArm newArm = new CircleArm() { ArmLength = 140 * subArmQty / 10, MainCanvas=RootCircleCanvas.RootCanvas,  RotationSpeed = 400 / subArmQty };
+            RootCircleCanvas.AddCircleArm(newArm);
             subArmQty -= 1;
         }
     }

@@ -70,12 +70,6 @@ namespace FourierCircles
         {
             InitializeComponent();
             DataContext = this;
-            Loaded += CircleArm_Loaded;
-        }
-
-        private void CircleArm_Loaded(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         public void RotateArm(TimeSpan deltaT)
@@ -118,7 +112,6 @@ namespace FourierCircles
             if (NextCircleArm == null)
             {
                 NextCircleArm = newArm;
-                MainCanvas?.Children.Add(NextCircleArm);
                 MoveNextArm();
                 NextCircleArm.ArmEndX = NextCircleArm.ArmCenterX + NextCircleArm.ArmLength;
                 NextCircleArm.ArmEndY = NextCircleArm.ArmCenterY;
