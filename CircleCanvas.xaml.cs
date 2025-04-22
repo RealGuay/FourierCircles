@@ -87,7 +87,6 @@ namespace FourierCircles
             if (rootCircleArm != null)
             {
                 rootCircleArm.AddCircleArm(arm);
-                arm.LastArmEndPositionUpdated += RootCircleArm_LastArmEndPositionUpdated;
             }
             else
             {
@@ -96,16 +95,13 @@ namespace FourierCircles
                 arm.ArmEndX = RootCircleCenterX + arm.ArmLength;
                 arm.ArmEndY = RootCircleCenterY;
                 rootCircleArm = arm;
-                LastArmEndX = arm.ArmEndX;
-                LastArmEndY = arm.ArmEndY;
-                arm.LastArmEndPositionUpdated += RootCircleArm_LastArmEndPositionUpdated;
             }
             RootCanvas.Children.Add(arm);
+            arm.LastArmEndPositionUpdated += RootCircleArm_LastArmEndPositionUpdated;
         }
 
         private void RootCircleArm_LastArmEndPositionUpdated(object? sender, EndPositionEventArgs e)
         {
-            Trace.TraceInformation($" Position : {e.EndPosition.X} , {e.EndPosition.Y}");
             LastArmEndX = e.EndPosition.X;
             LastArmEndY = e.EndPosition.Y;
         }

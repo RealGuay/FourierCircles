@@ -13,5 +13,6 @@
             <TextBlock Text="{Binding LastArmEndX}" Height="20" Width="60" Background="LightGray"></TextBlock>
             <TextBlock Text="{Binding LastArmEndY}" Height="20" Width="60" Background="LightGray"></TextBlock>
         </StackPanel>
+        <Line X1="{Binding LastArmEndX}" Y1="{Binding LastArmEndY}" X2="800" Y2="{Binding LastArmEndY}" Stroke="Violet" StrokeThickness="2"/>
     </Canvas>
 </UserControl>

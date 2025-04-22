@@ -13,6 +13,5 @@
             </Line.RenderTransform>
         </Line>
         <Ellipse Margin="-2" Height="4" Width="4" StrokeThickness="1" Stroke="Black" Canvas.Left="{Binding ArmCenterX}" Canvas.Top="{Binding ArmCenterY}"></Ellipse>
-        <TextBlock Canvas.Top="{Binding ArmTop}" Canvas.Left="{Binding ArmTop}" Background="Gray" Text="{Binding ArmTop}" Height="20" Width="60" />
     </Canvas>
 </UserControl>
