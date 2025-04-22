@@ -12,24 +12,12 @@ namespace FourierCircles
     {
         public Canvas? MainCanvas { get; set; }
         public int ArmLength { get; set; }
-        public double RotationSpeed {  get; set; }  
+        public double RotationSpeed { get; set; }
 
         public CircleArm? NextCircleArm { get; set; }
 
-
         public event EventHandler<EndPositionEventArgs>? LastArmEndPositionUpdated;
 
-        public double ArmTop
-        {
-            get { return (double)GetValue(ArmTopProperty); }
-            set { SetValue(ArmTopProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for ArmTop.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ArmTopProperty =
-            DependencyProperty.Register("ArmTop", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
-
-            
         public double ArmCenterX
         {
             get { return (double)GetValue(ArmCenterXProperty); }
@@ -99,7 +87,6 @@ namespace FourierCircles
             {
                 Point point = SegmentLine.TransformToAncestor(MainCanvas).Transform(new Point(SegmentLine.X2, SegmentLine.Y2));
                 LastArmEndPositionUpdated?.Invoke(this, new EndPositionEventArgs { EndPosition = point });
-                ArmTop = point.Y;
             }
         }
 

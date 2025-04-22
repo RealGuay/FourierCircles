@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -51,17 +51,40 @@ namespace FourierCircles
         public static readonly DependencyProperty LastArmEndYProperty =
             DependencyProperty.Register("LastArmEndY", typeof(double), typeof(CircleCanvas), new PropertyMetadata(0.0));
 
+
+        public double SineGraphicX
+        {
+            get { return (double)GetValue(SineGraphicXProperty); }
+            set { SetValue(SineGraphicXProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SineGraphicX.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SineGraphicXProperty =
+            DependencyProperty.Register("SineGraphicX", typeof(double), typeof(CircleCanvas), new PropertyMetadata(0.0));
+
+
+
         public CircleCanvas()
         {
             InitializeComponent();
             DataContext = this;
 
             Loaded += CircleCanvas_Loaded;
+            SineGraphicX = 800.0;
         }
 
         private void CircleCanvas_Loaded(object sender, RoutedEventArgs e)
         {
             AddCenterTargetLines();
+            LocateGraphic();
+        }
+
+        private void LocateGraphic()
+        {
+            Canvas.SetLeft(SineGraphic, SineGraphicX);
+//            Canvas.SetTop(SineGraphic, RootCircleCenterY /2);
+            SineGraphic.Height = RootCircleCenterY;
+            SineGraphic.Width = RootCircleCenterX;
         }
 
         private void AddCenterTargetLines()
@@ -104,6 +127,7 @@ namespace FourierCircles
         {
             LastArmEndX = e.EndPosition.X;
             LastArmEndY = e.EndPosition.Y;
+            SineGraphic.AddPoint(e.EndPosition, SineGraphicX);
         }
 
         internal void RotateArm(TimeSpan timeSpan)
