@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace FourierCircles
@@ -32,7 +33,7 @@ namespace FourierCircles
 
         public double LastArmEndX
         {
-            get { return (int)GetValue(LastArmEndXProperty); }
+            get { return (double)GetValue(LastArmEndXProperty); }
             set { SetValue(LastArmEndXProperty, value); }
         }
 
@@ -42,7 +43,7 @@ namespace FourierCircles
 
         public double LastArmEndY
         {
-            get { return (int)GetValue(LastArmEndYProperty); }
+            get { return (double)GetValue(LastArmEndYProperty); }
             set { SetValue(LastArmEndYProperty, value); }
         }
 
@@ -53,6 +54,7 @@ namespace FourierCircles
         public CircleCanvas()
         {
             InitializeComponent();
+            DataContext = this;
 
             Loaded += CircleCanvas_Loaded;
         }
@@ -85,6 +87,7 @@ namespace FourierCircles
             if (rootCircleArm != null)
             {
                 rootCircleArm.AddCircleArm(arm);
+                arm.LastArmEndPositionUpdated += RootCircleArm_LastArmEndPositionUpdated;
             }
             else
             {
@@ -95,8 +98,16 @@ namespace FourierCircles
                 rootCircleArm = arm;
                 LastArmEndX = arm.ArmEndX;
                 LastArmEndY = arm.ArmEndY;
+                arm.LastArmEndPositionUpdated += RootCircleArm_LastArmEndPositionUpdated;
             }
             RootCanvas.Children.Add(arm);
+        }
+
+        private void RootCircleArm_LastArmEndPositionUpdated(object? sender, EndPositionEventArgs e)
+        {
+            Trace.TraceInformation($" Position : {e.EndPosition.X} , {e.EndPosition.Y}");
+            LastArmEndX = e.EndPosition.X;
+            LastArmEndY = e.EndPosition.Y;
         }
 
         internal void RotateArm(TimeSpan timeSpan)

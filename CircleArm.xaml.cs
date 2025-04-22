@@ -17,6 +17,7 @@ namespace FourierCircles
         public CircleArm? NextCircleArm { get; set; }
 
 
+        public event EventHandler<EndPositionEventArgs>? LastArmEndPositionUpdated;
 
         public double ArmTop
         {
@@ -27,7 +28,6 @@ namespace FourierCircles
         // Using a DependencyProperty as the backing store for ArmTop.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ArmTopProperty =
             DependencyProperty.Register("ArmTop", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
-
 
             
         public double ArmCenterX
@@ -98,6 +98,7 @@ namespace FourierCircles
             else
             {
                 Point point = SegmentLine.TransformToAncestor(MainCanvas).Transform(new Point(SegmentLine.X2, SegmentLine.Y2));
+                LastArmEndPositionUpdated?.Invoke(this, new EndPositionEventArgs { EndPosition = point });
                 ArmTop = point.Y;
             }
         }

@@ -19,7 +19,7 @@ public partial class MainWindow : Window
 {
     private DispatcherTimer _circleTimer = new DispatcherTimer(DispatcherPriority.Render);
 
-    private int subArmQty = 7;
+    private int subArmQty = 4;
     private DateTime _startTime;
 
     public MainWindow()
