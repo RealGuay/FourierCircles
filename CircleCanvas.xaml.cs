@@ -30,8 +30,6 @@ namespace FourierCircles
         public static readonly DependencyProperty RootCircleCenterYProperty =
             DependencyProperty.Register("RootCircleCenterY", typeof(int), typeof(CircleCanvas), new PropertyMetadata(0));
 
-
-
         public double LastArmEndX
         {
             get { return (int)GetValue(LastArmEndXProperty); }
@@ -42,7 +40,6 @@ namespace FourierCircles
         public static readonly DependencyProperty LastArmEndXProperty =
             DependencyProperty.Register("LastArmEndX", typeof(double), typeof(CircleCanvas), new PropertyMetadata(0.0));
 
-
         public double LastArmEndY
         {
             get { return (int)GetValue(LastArmEndYProperty); }
@@ -52,9 +49,6 @@ namespace FourierCircles
         // Using a DependencyProperty as the backing store for LastArmEndY.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LastArmEndYProperty =
             DependencyProperty.Register("LastArmEndY", typeof(double), typeof(CircleCanvas), new PropertyMetadata(0.0));
-
-
-
 
         public CircleCanvas()
         {
@@ -82,8 +76,10 @@ namespace FourierCircles
             CrossVerticalLine.Y2 = RootCircleCenterY + crossLineLength;
         }
 
-        public void AddCircleArm(CircleArm arm)
+        public void AddCircleArm(int lenght, double rotationSpeed)
         {
+            CircleArm arm = PartFactory.CreateCircleArm(RootCanvas, lenght, rotationSpeed);
+
             if (arm == null) return;
 
             if (rootCircleArm != null)

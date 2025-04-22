@@ -16,6 +16,20 @@ namespace FourierCircles
 
         public CircleArm? NextCircleArm { get; set; }
 
+
+
+        public double ArmTop
+        {
+            get { return (double)GetValue(ArmTopProperty); }
+            set { SetValue(ArmTopProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ArmTop.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ArmTopProperty =
+            DependencyProperty.Register("ArmTop", typeof(double), typeof(CircleArm), new PropertyMetadata(0.0));
+
+
+            
         public double ArmCenterX
         {
             get { return (double)GetValue(ArmCenterXProperty); }
@@ -80,6 +94,11 @@ namespace FourierCircles
             {
                 MoveNextArm();
                 NextCircleArm.RotateArm(deltaT);
+            }
+            else
+            {
+                Point point = SegmentLine.TransformToAncestor(MainCanvas).Transform(new Point(SegmentLine.X2, SegmentLine.Y2));
+                ArmTop = point.Y;
             }
         }
 
