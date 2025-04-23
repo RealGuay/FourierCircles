@@ -70,7 +70,7 @@ namespace FourierCircles
             DataContext = this;
 
             Loaded += CircleCanvas_Loaded;
-            SineGraphicX = 800.0;
+            SineGraphicX = 420.0;
         }
 
         private void CircleCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -82,9 +82,9 @@ namespace FourierCircles
         private void LocateGraphic()
         {
             Canvas.SetLeft(SineGraphic, SineGraphicX);
-//            Canvas.SetTop(SineGraphic, RootCircleCenterY /2);
-            SineGraphic.Height = RootCircleCenterY;
-            SineGraphic.Width = RootCircleCenterX;
+            SineGraphic.Height = RootCanvas.Height;
+            SineGraphic.Width = RootCanvas.Width;
+            
         }
 
         private void AddCenterTargetLines()

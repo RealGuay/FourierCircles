@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FourierCircles"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas x:Name="RootCanvas" Height="800" Width="1400"  Background="Beige">
+    <Canvas x:Name="RootCanvas" Height="800" Width="400"  Background="Beige" HorizontalAlignment="Left" VerticalAlignment="Center">
         <Line x:Name="CrossHorizontalLine"  Stroke="Gray" StrokeThickness="1" StrokeDashArray="2" />
         <Line x:Name="CrossVerticalLine"    Stroke="Gray" StrokeThickness="1" StrokeDashArray="2" />
         <StackPanel>

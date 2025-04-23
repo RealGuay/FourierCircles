@@ -54,8 +54,8 @@ public partial class MainWindow : Window
     {
         if (subArmQty > 0)
         {
-            int len = 200 * subArmQty / 10;
-            double speed = 50 / subArmQty ;
+            int len = 300 * subArmQty / 10;
+            double speed = 250 / subArmQty ;
             RootCircleCanvas.AddCircleArm(len, speed);
             subArmQty -= 1;
         }

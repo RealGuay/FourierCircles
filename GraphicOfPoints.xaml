@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FourierCircles"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas x:Name="GraphicCanvas">
-        <Ellipse Width="400" Height="400" StrokeThickness="2" Stroke="MistyRose"/>
+             d:DesignHeight="40" d:DesignWidth="80">
+    <Canvas x:Name="GraphicCanvas" Background="LightSalmon">
+        <Line x:Name="ReferenceLine" X1="0" Y1="0" X2="200" Y2="0" StrokeDashArray="2" Stroke="Gray" StrokeThickness="2"/>
     </Canvas>
 </UserControl>

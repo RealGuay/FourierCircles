@@ -20,38 +20,53 @@ namespace FourierCircles
     /// </summary>
     public partial class GraphicOfPoints : UserControl
     {
-        private int maxPoints = 500;
-        private int nbPoints = 0;
+        private int maxPoints = 1000;
+
+        private List<Ellipse> points = new List<Ellipse>();
 
         public GraphicOfPoints()
         {
             InitializeComponent();
+            Loaded += GraphicOfPoints_Loaded;
+        }
+
+        private void GraphicOfPoints_Loaded(object sender, RoutedEventArgs e)
+        {
+            //GraphicCanvas.Height = GraphicHeight;
+            //GraphicCanvas.Width = GraphicWidth;
+            //ReferenceLine.Y1 = GraphicHeight / 2;
+            //ReferenceLine.Y2 = ReferenceLine.Y1;
+            //ReferenceLine.X2 = GraphicWidth;
+
+            CreateAllPoints();
+        }
+
+        private void CreateAllPoints()
+        {
+            GraphicCanvas.Children.Clear();
+            for (int i = 0; i < maxPoints; i++)
+            {
+                Ellipse ellipse = new Ellipse() { Height = 2, Width = 2, Stroke = Brushes.Blue, StrokeThickness = 2 };
+                points.Add(ellipse);
+                Canvas.SetLeft(ellipse, i);
+                Canvas.SetTop(ellipse, i);
+                GraphicCanvas.Children.Add(ellipse);
+            }
         }
 
         internal void AddPoint(Point endPosition, double sineGraphicX)
         {
-            nbPoints++;
-            if (nbPoints == maxPoints)
-            {
-                GraphicCanvas.Children.Clear();
-                nbPoints = 0;
-            }
-
             ScrollPreviousPoints();
-            Ellipse ellipse = new Ellipse() { Height = 2, Width = 2 , Stroke=Brushes.Blue, StrokeThickness=2 };
-            Canvas.SetLeft(ellipse, 0);
-            Canvas.SetTop(ellipse, endPosition.Y);
-            GraphicCanvas.Children.Add(ellipse);
+            Canvas.SetLeft(points[0], 0);
+            Canvas.SetTop(points[0], endPosition.Y);
         }
 
         private void ScrollPreviousPoints()
         {
-            foreach (var item in GraphicCanvas.Children)
+            for (int i = points.Count - 1; i > 0; i--)
             {
-                if (item is Ellipse ellipse)
-                {
-                    Canvas.SetLeft(ellipse, Canvas.GetLeft(ellipse) + 2.0);
-                }
+                double top = Canvas.GetTop(points[i - 1]);
+                Canvas.SetTop(points[i], top);
             }
         }
     }
